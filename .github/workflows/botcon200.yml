@@ -24,7 +24,6 @@ jobs:
       max-parallel: 27
       matrix:
         include:
-        include:
           - { job_index: 0, job_id: RaidByTLS1 }
           - { job_index: 1, job_id: RaidByTLS2 }
           - { job_index: 2, job_id: RaidByTLS3 }
