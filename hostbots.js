@@ -97,16 +97,16 @@ function sendPlayerInfoToDiscord(player) {
 
 HaxballJS.then((HBInit) => {
   const room = HBInit({
-    roomName: "🎀 Tralaleritas FC 🎀",
-    maxPlayers: 30,
+    roomName: "🍞🥪 SANGUCHITO | X1 🍞🥪",
+    maxPlayers: 18,
     public: true,
     noPlayer: false,
     playerName: "Valen",
     token: token,
     geo: {
       code: "AR",
-      lat: -34.56700134335552,
-      lon: -58.46712493808964,
+      lat: -34.56700134937046,
+      lon: -58.46712494318593,
     },
   });
 
