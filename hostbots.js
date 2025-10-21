@@ -97,16 +97,16 @@ function sendPlayerInfoToDiscord(player) {
 
 HaxballJS.then((HBInit) => {
   const room = HBInit({
-    roomName: "🍞🥪 SANGUCHITO | X1 🍞🥪",
+    roomName: "🍞🥪 SANGUCHITO | X4 🍞🥪",
     maxPlayers: 18,
     public: true,
     noPlayer: false,
-    playerName: "Valen",
+    playerName: "Mattsito",
     token: token,
     geo: {
       code: "AR",
-      lat: -34.56700134937046,
-      lon: -58.46712494318593,
+      lat: -34.54571157629702,
+      lon: -58.449096714665814,
     },
   });
 
