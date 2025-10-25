@@ -113,11 +113,12 @@ HaxballJS.then((HBInit) => {
     token,
     geo: {
       code: "AR",
-      lat: -34.56422805797623,
-      lon: -58.4501953131598,
+      lat: -34.484645842799246,
+      lon: -58.46316528225952,
     },
   });
 
+  
   room.onRoomLink = (url) => {
     console.log("✅ Sala creada exitosamente!");
     console.log("🔗 Link de la sala:", url);
