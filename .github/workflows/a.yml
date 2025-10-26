@@ -54,7 +54,6 @@ jobs:
 
       - name: Instalar dependencias
         run: |
-          npm install haxball.js
           npm install
 
       - name: Esperar inicio sincronizado
