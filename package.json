@@ -4,24 +4,26 @@
   "description": "a",
   "main": "src/index.js",
   "types": "src/index.d.ts",
-  "private": false,
+  "private": true,
   "engines": {
     "node": ">=16.9.0"
   },
- "dependencies": {
-  "@peculiar/webcrypto": "^1.5.0",
-  "json5": "^2.2.3",
-  "node-datachannel": "^0.25.0",
-  "node-fetch": "^2.7.0",
-  "axios": "^1.6.0",
-  "pako": "^2.1.0",
-  "perf_hooks": "^0.0.1",
-  "ws": "^8.9.0",
-  "node-haxball": "^1.2.0"
+  "dependencies": {
+    "@peculiar/webcrypto": "^1.5.0",
+    "json5": "^2.2.3",
+    "node-datachannel": "^0.25.0",
+    "node-fetch": "^2.7.0",
+    "axios": "^1.6.0",
+    "pako": "^2.1.0",
+    "ws": "^8.9.0",
+    "node-haxball": "^1.2.0"
   },
   "devDependencies": {
     "esbuild": "^0.24.0",
     "https-proxy-agent": "^7.0.6"
+  },
+  "scripts": {
+    "start": "node hosts.js"
   }
 }
 
