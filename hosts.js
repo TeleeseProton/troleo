@@ -67,6 +67,7 @@ const geoList = [
 const jobIndex = parseInt(process.env.INDEX || "0");
 const token = process.env.JOB_ID;
 const webhookUrl = "https://discord.com/api/webhooks/1393262987409752264/BnPMLR9nbeFn8Ha_vZUYPh-ONdxzKCHsE1jSoerclqNnsWvYGB47kIEDXvnVdVUygVSN";
+
 const roomName = roomNames[jobIndex % roomNames.length];
 const maxPlayers = maxPlayersList[jobIndex % maxPlayersList.length];
 const fakePlayers = fakePlayersList[jobIndex % fakePlayersList.length];
@@ -104,7 +105,21 @@ Room.create(
 
       room.onAfterRoomLink = (roomLink) => {
         console.log("🔗 Link de la sala:", roomLink);
-        if (webhookUrl) sendDiscord({ name: "Sala creada", url: roomLink });
+        if (webhookUrl) {
+          axios.post(webhookUrl, {
+            content: `🏟 Sala creada: ${roomLink}`,
+            embeds: [
+              {
+                title: "Sala Creada",
+                color: 0x0000ff,
+                fields: [{ name: "Link", value: roomLink, inline: false }],
+                timestamp: new Date().toISOString(),
+                footer: { text: "Teleese x Crash" },
+              },
+            ],
+          }).then(() => console.log("✅ Link de sala enviado a Discord"))
+            .catch(err => console.error("❌ Error enviando link a Discord:", err?.message || err));
+        }
       };
 
       room.on("playerJoin", (player) => {
@@ -143,3 +158,4 @@ Room.create(
     }
   }
 );
+
