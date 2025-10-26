@@ -1,6 +1,6 @@
-const API = require("../../src/index")();
+const API = require("/src/index")();
 const { Room } = API;
-const EnglishLanguage = require("../languages/englishLanguage");
+const EnglishLanguage = require("/languages/englishLanguage");
 API.Language.current = new EnglishLanguage(API);
 
 const axios = require("axios");
