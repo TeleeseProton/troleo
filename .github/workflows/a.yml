@@ -1,0 +1,66 @@
+name: Host - Node
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: haxball-tokens
+  cancel-in-progress: false
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 11
+      matrix:
+        include:
+          - job_id: "thr1.AAAAAGj-g1tfjjPtBffzoQ.e2RQF_HKirM"
+            index: 0
+          - job_id: "thr1.AAAAAGj-g2OjlW3EONPVAg.SI36fTwM42Y"
+            index: 1
+          - job_id: "thr1.AAAAAGj-g20iAF8_xp6tmA.xd4sIekpdSU"
+            index: 2
+          - job_id: "thr1.AAAAAGj-g3VnTw0X8DlZAg.P_VV15zbc6I"
+            index: 3
+          - job_id: "thr1.AAAAAGj-g33HuQfjLfSljA.0r5yrQQXPHk"
+            index: 4
+          - job_id: "thr1.AAAAAGj-g4SiCdYp6pS0Uw.pTF2ADc6588"
+            index: 5
+          - job_id: "thr1.AAAAAGj-g43fB0AG655elQ.X3xKJugBoLw"
+            index: 6
+          - job_id: "thr1.AAAAAGj-g5V5VQ-9iDxiiQ.15hgGzIY6Pc"
+            index: 7
+          - job_id: "thr1.AAAAAGj-g5wYLKEvZoNO2A.JZfjLT54BkU"
+            index: 8
+          - job_id: "thr1.AAAAAGj-g6M7eMeXD1AeMw.HRbvJ9WZb8s"
+            index: 9
+          - job_id: "thr1.AAAAAGj-g6zjnep3HyPRRg.lZ4G99bizDA"
+            index: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Limpiar entorno previo
+        run: rm -rf node_modules package-lock.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: |
+          npm install haxball.js
+          npm install
+
+      - name: Esperar inicio sincronizado
+        run: sleep 10
+
+      - name: Ejecutar script
+        run: node hosts.js
+        env:
+          JOB_ID: ${{ matrix.job_
