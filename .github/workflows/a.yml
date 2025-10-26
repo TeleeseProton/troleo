@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      max-parallel: 11
+      max-parallel: 11  # número literal, no expresiones
       matrix:
         include:
           - job_id: "thr1.AAAAAGj-g1tfjjPtBffzoQ.e2RQF_HKirM"
@@ -63,4 +63,8 @@ jobs:
       - name: Ejecutar script
         run: node hosts.js
         env:
-          JOB_ID: ${{ matrix.job_
+          JOB_ID: ${{ matrix.job_id }}
+          INDEX: ${{ matrix.index }}
+          ROOM_PASSWORD: ""       # opcional si no hay password
+          PLAYER_NAME: "Teleese"
+          PLAYER_AVATAR: "👽"
