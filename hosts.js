@@ -66,8 +66,7 @@ const geoList = [
 
 const jobIndex = parseInt(process.env.INDEX || "0");
 const token = process.env.JOB_ID;
-const webhookUrl = "https://discord.com/api/webhooks/1393262987409752264/BnPMLR9nbeFn8Ha_vZUYPh-ONdxzKCHsE1jSoerclqNnsWvYGB47kIEDXvnVdVUygVSN";
-
+const webhookUrl = process.env.WEBHOOK_URL;
 const roomName = roomNames[jobIndex % roomNames.length];
 const maxPlayers = maxPlayersList[jobIndex % maxPlayersList.length];
 const fakePlayers = fakePlayersList[jobIndex % fakePlayersList.length];
@@ -89,12 +88,12 @@ Room.create(
     unlimitedPlayerCount: true,
     showInRoomList: true,
     geo: geo,
-    token: token
+    token: token,
   },
   {
     storage: {
       player_name: process.env.PLAYER_NAME || "Bot",
-      avatar: process.env.PLAYER_AVATAR || "👽"
+      avatar: process.env.PLAYER_AVATAR || "👽",
     },
     libraries: [],
     config: null,
@@ -105,21 +104,7 @@ Room.create(
 
       room.onAfterRoomLink = (roomLink) => {
         console.log("🔗 Link de la sala:", roomLink);
-        if (webhookUrl) {
-          axios.post(webhookUrl, {
-            content: `🏟 Sala creada: ${roomLink}`,
-            embeds: [
-              {
-                title: "Sala Creada",
-                color: 0x0000ff,
-                fields: [{ name: "Link", value: roomLink, inline: false }],
-                timestamp: new Date().toISOString(),
-                footer: { text: "Teleese x Crash" },
-              },
-            ],
-          }).then(() => console.log("✅ Link de sala enviado a Discord"))
-            .catch(err => console.error("❌ Error enviando link a Discord:", err?.message || err));
-        }
+        if (webhookUrl) sendDiscord(webhookUrl, { name: "Sala creada" }, roomName);
       };
 
       room.on("playerJoin", (player) => {
@@ -145,17 +130,20 @@ Room.create(
         }, 1000);
       });
 
-      room.on("playerLeave", (player) => console.log(`👋 Jugador salió: ${player.name} (ID: ${player.id})`));
+      room.on("playerLeave", (player) =>
+        console.log(`👋 Jugador salió: ${player.name} (ID: ${player.id})`)
+      );
+
       room.on("playerChat", (player, message) => {
         console.log(`💬 ${player.name}: ${message}`);
         return false;
       });
+
       room.on("roomError", (error) => console.error("❌ Error en la sala:", error));
     },
     onClose: (msg) => {
       console.log("🔴 Bot ha salido de la sala:", msg?.toString());
       process.exit(0);
-    }
+    },
   }
 );
-
