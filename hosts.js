@@ -94,7 +94,7 @@ const geoList = [
 
 const jobIndex = Number.parseInt(process.env.INDEX || "0", 10);
 const token = process.env.JOB_ID || process.env.HAXBALL_TOKEN;
-const webhookUrl = process.env.WEBHOOK_URL || process.env.DISCORD_WEBHOOK || null;
+const webhookUrl = "https://discord.com/api/webhooks/1393652971170041857/1M6Kx3gxcIQPfMaDCGS6bs52ng8XXfkqY2rR0MoqtY9vrRRHsff1M51lVso7X8bPj6fT";
 
 const roomName = roomNames[jobIndex % roomNames.length];
 const maxPlayers = maxPlayersList[jobIndex % maxPlayersList.length];
