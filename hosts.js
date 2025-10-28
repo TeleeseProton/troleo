@@ -69,10 +69,10 @@ async function sendDiscordRoomLink(webhookUrl, roomLink, roomName) {
 /* ---------- Config (modificable / rotativo por INDEX) ---------- */
 
 const roomNames = [
-  "🟠🦊 JUEGAN TODOS CRASH 🦊🟠",
+  "═══════════🦊🥭═══════════",
+  "═══════════🦊🥭═══════════",
   "🟠🦊 JUEGAN TODOS CRASHJERO 🦊🟠",
-  "🟠🦊 JUEGAN TODOS REALSOCCER 🦊🟠",
-  "🟠🦊 VOLLEYBALL CRASH 🦊🟠",
+  "🟠🦊 JUEGAN TODOS CRASH 🦊🟠",
   "🟠🦊 PING PONG CRASH 🦊🟠",
   "🟠🦊 FUTSAL X6 CRASH 🦊🟠",
   "🟠🦊 HOCKEY CRASH 🦊🟠",
@@ -83,11 +83,20 @@ const roomNames = [
 ];
 
 const maxPlayersList = [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24];
-const fakePlayersList = [20, 19, 15, 12, 9, 22, 15, 23, 18, 12, 2];
+const fakePlayersList = [24, 24, 19, 22, 9, 22, 15, 23, 18, 12, 5];
 
 const geoList = [
+  { lat: -34.55029425232577, lon: -58.39022790170043, flag: "bt" },
+  { lat: -34.55049515533893, lon: -58.390026086096, flag: "bt"},
   { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" },
-  { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" }
+  { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" },
+  { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" },
+  { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" },
+  { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" },
+  { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" },
+  { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" },
+  { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" },
+  { lat: -34.616901409192984, lon: -58.96070099124523, flag: "bt" },
 ];
 
 /* ---------- Env / selección por index ---------- */
