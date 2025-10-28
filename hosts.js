@@ -79,11 +79,11 @@ const roomNames = [
   "🟠🦊 GANA DINERO CRASH 🦊🟠",
   "🟠🦊 SOLO MALOS CRASH 🦊🟠",
   "🟠🦊 SOLO BUENOS CRASH 🦊🟠",
-  "🟠🦊 WATERPOLO CRASH 🦊🟠"
+  "🟠🦊 GTA CRASH ANDREAS 🦊🟠"
 ];
 
-const maxPlayersList = [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24];
-const fakePlayersList = [24, 24, 19, 22, 9, 22, 15, 23, 18, 12, 5];
+const maxPlayersList = [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 1];
+const fakePlayersList = [24, 24, 19, 22, 9, 22, 15, 23, 18, 12, 30];
 
 const geoList = [
   { lat: -34.55029425232577, lon: -58.39022790170043, flag: "bt" },
