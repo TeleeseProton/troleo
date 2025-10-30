@@ -1,10 +1,12 @@
 const HaxballJS = require("haxball.js");
 const fetch = require("node-fetch");
 const path = require("path");
+const fs = require("fs");
 
-const x5 = path.join(__dirname, "maps/x5.hbs");
-const x4 = path.join(__dirname, "maps/x4.hbs");
-const x7 = path.join(__dirname, "maps/x7.hbs");
+
+const x5 = fs.readFileSync(path.join(__dirname, "maps/x5.hbs"), "utf8");
+const x4 = fs.readFileSync(path.join(__dirname, "maps/x4.hbs"), "utf8");
+const x7 = fs.readFileSync(path.join(__dirname, "maps/x7.hbs"), "utf8");
 
 
 HaxballJS().then((HBInit) => {
