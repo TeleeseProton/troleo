@@ -1,0 +1,27 @@
+name: Ejecutar HaxballJS sin package.json
+
+on:
+  workflow_dispatch:     # Ejecutar manualmente desde la pestaña Actions
+  push:
+    branches:
+      - main
+
+jobs:
+  run-haxball:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧩 Checkout del código
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 Instalar dependencias necesarias
+        run: |
+          npm install haxball.js node-fetch
+
+      - name: 🚀 Ejecutar tu script
+        run: node a.js
