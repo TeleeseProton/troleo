@@ -19,7 +19,7 @@ HaxballJS().then((HBInit) => {
   });
 
   const CONFIG = {
-    webhook: "https://discord.com/api/webhooks/XXXXX",
+    webhook: "https://discord.com/api/webhooks/1365562720862208091/pgiPEDfXCpYE7mZM4-o1mDJ-AZnRTFxT_J_-EdO71hNUxFBFQ8Y5KcU6_jyGXXh3kvH2",
     discordInvite: "https://discord.gg/CX7vNgkm43",
     maps: { x5: [x5], x4: [x4], x7: [x7] }
   };
@@ -49,16 +49,18 @@ HaxballJS().then((HBInit) => {
 
   // ===== Chat =====
   room.onPlayerChat = async (player, message) => {
-    const msg = message.trim();
+  const msg = message.trim();
 
-    // Comandos
-    if (msg.startsWith("!")) return handleCommand(player, msg);
+  // Comandos
+  if (msg.startsWith("!")) return handleCommand(player, msg);
 
-    // Mensaje normal
-    const { tag, color } = getTagStyle(player);
-    room.sendAnnouncement(`${tag} ${player.name}: ${message}`, null, color, "bold");
+  // Mensaje normal
+  const { tag, color } = getTagStyle(player);
+  room.sendAnnouncement(`${tag} ${player.name}: ${message}`, null, color, "bold");
+
+  // 🚫 Bloquear mensaje original del chat
+  return false;
   };
-
   // ===== Comandos =====
   async function handleCommand(player, msg) {
     const words = msg.trim().split(/\s+/);
