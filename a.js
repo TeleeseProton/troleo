@@ -48,19 +48,24 @@ HaxballJS().then((HBInit) => {
   function isAdmin(player) { return ADMINS.includes(getAuth(player)); }
 
   // ===== Chat =====
-  room.onPlayerChat = async (player, message) => {
+room.onPlayerChat = async (player, message) => {
   const msg = message.trim();
 
-  // Comandos
-  if (msg.startsWith("!")) return handleCommand(player, msg);
+  // Si el mensaje empieza con "!" es un comando
+  if (msg.startsWith("!")) {
+    const handled = await handleCommand(player, msg);
+    // 🔕 Siempre bloqueamos el mensaje original, sea comando o no
+    return false;
+  }
 
-  // Mensaje normal
+  // Si NO empieza con "!", lo tratamos como mensaje normal formateado
   const { tag, color } = getTagStyle(player);
   room.sendAnnouncement(`${tag} ${player.name}: ${message}`, null, color, "bold");
 
-  // 🚫 Bloquear mensaje original del chat
+  // 🚫 Bloquear mensaje original
   return false;
-  };
+};
+
   // ===== Comandos =====
   async function handleCommand(player, msg) {
     const words = msg.trim().split(/\s+/);
