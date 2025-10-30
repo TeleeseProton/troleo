@@ -15,7 +15,7 @@ HaxballJS().then((HBInit) => {
     maxPlayers: 16,
     public: true,
     noPlayer: true,
-    token: "thr1.AAAAAGkDiEyBcQ2udappgw.9J7auaaGN1Y", // Required
+    token: "thr1.AAAAAGkDwRbm6rFKRsSp1Q.oKh_SZq401Q", // Required
   });
 
   const CONFIG = {
