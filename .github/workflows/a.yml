@@ -1,4 +1,4 @@
-name: Host - Node
+name: Host - Recaptcha Rooms
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: haxball-tokens
+  group: haxball-recaptcha-hosts
   cancel-in-progress: false
 
 jobs:
@@ -17,52 +17,52 @@ jobs:
       max-parallel: 11
       matrix:
         include:
-         - job_id: "thr1.AAAAAGkTg9m4Ff11zcG2pQ.-wv3RYFqnEs"
-           index: 0
-         - job_id: "thr1.AAAAAGkTg98fiQQC6Lg-2g.eGbsYtwxUYs"
-           index: 1
-         - job_id: "thr1.AAAAAGkTg-WVVlR-Zr99Aw.v8Uiw1INrPc"
-           index: 2
-         - job_id: "thr1.AAAAAGkTg-vPB78Zd7CdWA.sSLrbygGZPo"
-           index: 3
-         - job_id: "thr1.AAAAAGkTg_F7iwo5ThHC2w.OrGtoDmM7PM"
-           index: 4
-         - job_id: "thr1.AAAAAGkTg_jwDvt6sg2Ssg.lOJTbbW69LA"
-           index: 5
-         - job_id: "thr1.AAAAAGkThAKZSlNXismIPg.G0VPgoeznZk"
-           index: 6
-         - job_id: "thr1.AAAAAGkThAxrQjgfm7xu0Q.xdgZWkHdnzs"
-           index: 7
-         - job_id: "thr1.AAAAAGkThBbI7HDPO24akg.UjCjAEX3twg"
-           index: 8
-         - job_id: "thr1.AAAAAGkThCD_L4fqoPOymA.vRbCBt9mKOs"
-           index: 9
-         - job_id: "thr1.AAAAAGkThCsOWyC_Fkhonw.xDU7Ygo3h9k"
-           index: 10
+          - recaptcha_token: "thr1.AAAAAGkTg9m4Ff11zcG2pQ.-wv3RYFqnEs"
+            index: 0
+          - recaptcha_token: "thr1.AAAAAGkTg98fiQQC6Lg-2g.eGbsYtwxUYs"
+            index: 1
+          - recaptcha_token: "thr1.AAAAAGkTg-WVVlR-Zr99Aw.v8Uiw1INrPc"
+            index: 2
+          - recaptcha_token: "thr1.AAAAAGkTg-vPB78Zd7CdWA.sSLrbygGZPo"
+            index: 3
+          - recaptcha_token: "thr1.AAAAAGkTg_F7iwo5ThHC2w.OrGtoDmM7PM"
+            index: 4
+          - recaptcha_token: "thr1.AAAAAGkTg_jwDvt6sg2Ssg.lOJTbbW69LA"
+            index: 5
+          - recaptcha_token: "thr1.AAAAAGkThAKZSlNXismIPg.G0VPgoeznZk"
+            index: 6
+          - recaptcha_token: "thr1.AAAAAGkThAxrQjgfm7xu0Q.xdgZWkHdnzs"
+            index: 7
+          - recaptcha_token: "thr1.AAAAAGkThBbI7HDPO24akg.UjCjAEX3twg"
+            index: 8
+          - recaptcha_token: "thr1.AAAAAGkThCD_L4fqoPOymA.vRbCBt9mKOs"
+            index: 9
+          - recaptcha_token: "thr1.AAAAAGkThCsOWyC_Fkhonw.xDU7Ygo3h9k"
+            index: 10
+
     steps:
-      - name: Checkout code
+      - name: 🧩 Checkout repo
         uses: actions/checkout@v4
 
-      - name: Limpiar entorno previo
+      - name: 🧹 Limpiar entorno previo
         run: rm -rf node_modules package-lock.json
 
-      - name: Setup Node.js
+      - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Instalar dependencias
-        run: |
-          npm install
+      - name: 📦 Instalar dependencias
+        run: npm install
 
-      - name: Esperar inicio sincronizado
+      - name: ⏳ Esperar inicio sincronizado
         run: sleep 10
 
-      - name: Ejecutar script
-        run: node hosts.js
+      - name: 🚀 Ejecutar host
+        run: node main.js
         env:
-          JOB_ID: ${{ matrix.job_id }}
           INDEX: ${{ matrix.index }}
+          RECAPTCHA_TOKEN: ${{ matrix.recaptcha_token }}
           ROOM_PASSWORD: ""
           PLAYER_NAME: "Teleese"
           PLAYER_AVATAR: "👽"
