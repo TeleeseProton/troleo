@@ -134,34 +134,56 @@ Room.create(
 
       room.onPlayerJoin = (playerObj) => {
         try {
-          const players = room.getPlayerList();
-          const total = players.length;
+          const players = room.players || [];
+          const humanos = players.filter(p => !p.name.includes("Teleese") && p.id !== 0);
+          const totalHumanos = humanos.length;
 
           console.log(`🎯 Nuevo jugador: ${playerObj.name} (ID: ${playerObj.id})`);
           sendDiscordPlayer(webhookUrl, playerObj, roomName);
 
-          // Mensaje de bienvenida
-          room.sendAnnouncement(`Bienvenidx ${playerObj.name}! 🟣 Unite a nuestro Discord: https://discord.gg/6bvvAQZF`, playerObj.id, 0xff00ff, "bold", 2);
+          // Bienvenida
+          room.sendAnnouncement(
+            `Bienvenidx ${playerObj.name}! 🟣 Unite a nuestro Discord: https://discord.gg/6bvvAQZF`,
+            playerObj.id,
+            0xff00ff,
+            "bold",
+            2
+          );
 
-          // Si es el primero → darle admin
-          if (total === 1) {
+          // 🔑 Si es el primer jugador humano → darle admin
+          if (totalHumanos === 1) {
             room.setPlayerAdmin(playerObj.id, true);
-            room.sendAnnouncement(`🔑 ${playerObj.name} es el primer jugador. Admin asignado automáticamente.`, null, 0x00ff00, "bold", 2);
+            room.sendAnnouncement(
+              `🔑 ${playerObj.name} es el primer jugador humano. Admin asignado automáticamente.`,
+              null,
+              0x00ff00,
+              "bold",
+              2
+            );
           }
+
+          // 💎 Siempre darte admin si entrás vos
+          if (playerObj.name.toLowerCase().includes("teleese")) {
+            room.setPlayerAdmin(playerObj.id, true);
+            room.sendAnnouncement(
+              `👑 Bienvenido ${playerObj.name}, admin asignado automáticamente.`,
+              null,
+              0x00ffff,
+              "bold",
+              2
+            );
+          }
+
         } catch (e) {
           console.error("Error en onPlayerJoin:", e);
         }
-      };
-
-      room.onPlayerLeave = (playerObj) => {
-        console.log(`👋 Jugador salió: ${playerObj.name} (ID: ${playerObj.id})`);
       };
 
       /* ------------------ Comandos del Admin y Generales ------------------ */
 
       room.onPlayerChat = (player, message) => {
         const msg = message.trim().toLowerCase();
-        const p = room.getPlayer(player.id);
+        const p = room.players.find(pl => pl.id === player.id);
 
         // Comando público !discord
         if (msg === "!discord") {
@@ -170,7 +192,7 @@ Room.create(
         }
 
         // Comandos de admin (solo admins)
-        if (p.admin) {
+        if (p && p.admin) {
           if (msg.startsWith("!lock")) {
             const pass = msg.split(" ")[1] || "reservada";
             room.setPassword(pass);
@@ -186,7 +208,7 @@ Room.create(
 
           if (msg.startsWith("!admin ")) {
             const targetName = msg.slice(7).trim();
-            const found = room.getPlayerList().find(pl => pl.name.toLowerCase() === targetName.toLowerCase());
+            const found = room.players.find(pl => pl.name.toLowerCase() === targetName.toLowerCase());
             if (found) {
               room.setPlayerAdmin(found.id, true);
               room.sendAnnouncement(`👑 ${found.name} ahora es admin.`, null, 0x00ff00, "bold", 2);
@@ -198,7 +220,7 @@ Room.create(
 
           if (msg.startsWith("!kick ")) {
             const targetName = msg.slice(6).trim();
-            const found = room.getPlayerList().find(pl => pl.name.toLowerCase() === targetName.toLowerCase());
+            const found = room.players.find(pl => pl.name.toLowerCase() === targetName.toLowerCase());
             if (found) {
               room.kickPlayer(found.id, "Expulsado por admin", false);
               room.sendAnnouncement(`🚪 ${found.name} fue expulsado.`, null, 0xff5555, "bold", 2);
@@ -218,3 +240,4 @@ Room.create(
     }
   }
 );
+
