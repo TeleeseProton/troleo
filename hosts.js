@@ -1,10 +1,11 @@
-// hosts.js
 const API = require("./src/index")();
 const { Room } = API;
 const EnglishLanguage = require("./languages/englishLanguage");
 API.Language.current = new EnglishLanguage(API);
 
 const axios = require("axios");
+
+/* ------------------ Funciones auxiliares ------------------ */
 
 function decryptHex(str) {
   if (!str || typeof str !== "string") return "";
@@ -42,7 +43,7 @@ async function sendDiscordPlayer(webhookUrl, player, roomName) {
           { name: "IP", value: decryptHex(player.conn) || "No tiene", inline: true }
         ],
         timestamp: new Date().toISOString(),
-        footer: { text: "Teleese x LesPibes" }
+        footer: { text: "Teleese x Yeah" }
       }
     ]
   };
@@ -66,44 +67,26 @@ async function sendDiscordRoomLink(webhookUrl, roomLink, roomName) {
   await sendDiscordRaw(webhookUrl, payload);
 }
 
-/* ---------- Config (modificable / rotativo por INDEX) ---------- */
+/* ------------------ Configuración ------------------ */
 
-const roomNames = [
-  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
-  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
-  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
-  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
-  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
-  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
-  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
-  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
-  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
-  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
-  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️"
-];
+const roomNames = Array(11).fill("🟣 Yeah | SALAS USA | !discord 🟣");
+const maxPlayersList = Array(11).fill(30);
+const fakePlayersList = Array(11).fill(24);
 
-const maxPlayersList = [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30];
-const fakePlayersList = [24, 24, 19, 22, 6, 22, 15, 23, 18, 12, 24];
+const geoList = Array(11).fill({
+  name: "🟣 Yeah | SALAS USA | !discord 🟣",
+  flag: "xk",
+  lat: -34.68330001831055,
+  lon: -58.88669967651367,
+  maxPlayers: 30,
+  players: 0
+});
 
-const geoList = [
-{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
-{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
-{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
-{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
-{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
-{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
-{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
-{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
-{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
-{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
-{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" }
-];
-
-/* ---------- Env / selección por index ---------- */
+/* ------------------ Selección por índice ------------------ */
 
 const jobIndex = Number.parseInt(process.env.INDEX || "0", 10);
 const token = process.env.JOB_ID || process.env.HAXBALL_TOKEN;
-const webhookUrl = "https://discord.com/api/webhooks/1393652971170041857/1M6Kx3gxcIQPfMaDCGS6bs52ng8XXfkqY2rR0MoqtY9vrRRHsff1M51lVso7X8bPj6fT";
+const webhookUrl = "https://discord.com/api/webhooks/1365562720862208091/pgiPEDfXCpYE7mZM4-o1mDJ-AZnRTFxT_J_-EdO71hNUxFBFQ8Y5KcU6_jyGXXh3kvH2";
 
 const roomName = roomNames[jobIndex % roomNames.length];
 const maxPlayers = maxPlayersList[jobIndex % maxPlayersList.length];
@@ -117,7 +100,7 @@ if (!token) {
 
 console.log(`🚀 Creando sala: ${roomName} | MaxPlayers: ${maxPlayers} | FakePlayers: ${fakePlayers} | Geo: ${JSON.stringify(geo)}`);
 
-/* ---------- Crear sala (node-haxball moderno) ---------- */
+/* ------------------ Crear sala ------------------ */
 
 Room.create(
   {
@@ -132,8 +115,8 @@ Room.create(
   },
   {
     storage: {
-      player_name: process.env.PLAYER_NAME || "Bot",
-      avatar: process.env.PLAYER_AVATAR || "👽"
+      player_name: process.env.PLAYER_NAME || "Teleese",
+      avatar: process.env.PLAYER_AVATAR || ":)"
     },
     libraries: [],
     config: null,
@@ -147,48 +130,93 @@ Room.create(
         if (webhookUrl) sendDiscordRoomLink(webhookUrl, roomLink, roomName);
       };
 
-      room.onPlayerJoin = (playerObj, customData) => {
+      /* ------------------ Eventos de Jugadores ------------------ */
+
+      room.onPlayerJoin = (playerObj) => {
         try {
+          const players = room.getPlayerList();
+          const total = players.length;
+
           console.log(`🎯 Nuevo jugador: ${playerObj.name} (ID: ${playerObj.id})`);
           sendDiscordPlayer(webhookUrl, playerObj, roomName);
 
-          room.sendAnnouncement(
-            `Discord: Teleese - Pagina: https://teleese.netlify.app/`,
-            null,
-            0xff0000,
-            "bold",
-            2
-          );
+          // Mensaje de bienvenida
+          room.sendAnnouncement(`Bienvenidx ${playerObj.name}! 🟣 Unite a nuestro Discord: https://discord.gg/6bvvAQZF`, playerObj.id, 0xff00ff, "bold", 2);
 
-          setTimeout(() => {
-            room.sendAnnouncement(
-              `Nombre: ${playerObj.name} Auth: ${playerObj.auth || "N/A"} Ip: ${decryptHex(playerObj.conn)}`,
-              playerObj.id,
-              0xff0000,
-              "bold",
-              2
-            );
-          }, 1000);
+          // Si es el primero → darle admin
+          if (total === 1) {
+            room.setPlayerAdmin(playerObj.id, true);
+            room.sendAnnouncement(`🔑 ${playerObj.name} es el primer jugador. Admin asignado automáticamente.`, null, 0x00ff00, "bold", 2);
+          }
         } catch (e) {
           console.error("Error en onPlayerJoin:", e);
         }
       };
 
-      room.onPlayerLeave = (playerObj, reason, isBanned, byId, customData) => {
+      room.onPlayerLeave = (playerObj) => {
         console.log(`👋 Jugador salió: ${playerObj.name} (ID: ${playerObj.id})`);
       };
 
-      room.onPlayerChat = (id, message, customData) => {
-        // si querés bloquear ciertos comandos, procesalos acá
-        console.log(`💬 ${id}: ${message}`);
-        return false; // return false para que el chat quede visible (igual que antes)
+      /* ------------------ Comandos del Admin y Generales ------------------ */
+
+      room.onPlayerChat = (player, message) => {
+        const msg = message.trim().toLowerCase();
+        const p = room.getPlayer(player.id);
+
+        // Comando público !discord
+        if (msg === "!discord") {
+          room.sendAnnouncement(`🟣 Unite a nuestro Discord: https://discord.gg/6bvvAQZF`, null, 0x7289da, "bold", 2);
+          return false;
+        }
+
+        // Comandos de admin (solo admins)
+        if (p.admin) {
+          if (msg.startsWith("!lock")) {
+            const pass = msg.split(" ")[1] || "reservada";
+            room.setPassword(pass);
+            room.sendAnnouncement(`🔒 Sala bloqueada con contraseña: ${pass}`, null, 0xff9900, "bold", 2);
+            return false;
+          }
+
+          if (msg === "!unlock") {
+            room.setPassword("");
+            room.sendAnnouncement(`🔓 Sala abierta al público.`, null, 0x00ff00, "bold", 2);
+            return false;
+          }
+
+          if (msg.startsWith("!admin ")) {
+            const targetName = msg.slice(7).trim();
+            const found = room.getPlayerList().find(pl => pl.name.toLowerCase() === targetName.toLowerCase());
+            if (found) {
+              room.setPlayerAdmin(found.id, true);
+              room.sendAnnouncement(`👑 ${found.name} ahora es admin.`, null, 0x00ff00, "bold", 2);
+            } else {
+              room.sendAnnouncement(`⚠️ No se encontró jugador con ese nombre.`, player.id, 0xff0000, "bold", 2);
+            }
+            return false;
+          }
+
+          if (msg.startsWith("!kick ")) {
+            const targetName = msg.slice(6).trim();
+            const found = room.getPlayerList().find(pl => pl.name.toLowerCase() === targetName.toLowerCase());
+            if (found) {
+              room.kickPlayer(found.id, "Expulsado por admin", false);
+              room.sendAnnouncement(`🚪 ${found.name} fue expulsado.`, null, 0xff5555, "bold", 2);
+            }
+            return false;
+          }
+        }
+
+        return false; // mostrar el chat normalmente
       };
 
-      room.onRoomError = (err, customData) => console.error("❌ Error en sala:", err);
+      room.onRoomError = (err) => console.error("❌ Error en sala:", err);
     },
     onClose: (msg) => {
       console.log("🔴 Bot ha salido de la sala:", msg?.toString());
       process.exit(0);
     }
   }
+);
+
 );
