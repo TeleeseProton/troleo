@@ -75,7 +75,7 @@ const fakePlayersList = Array(11).fill(24);
 
 const geoList = Array(11).fill({
   name: "🟣 Yeah | SALAS USA | !discord 🟣",
-  flag: "eu",
+  flag: "xk",
   lat: -34.68330001831055,
   lon: -58.88669967651367,
   password: 0,
