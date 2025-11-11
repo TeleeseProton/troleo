@@ -75,17 +75,18 @@ const fakePlayersList = Array(11).fill(24);
 
 const geoList = Array(11).fill({
   name: "🟣 Yeah | SALAS USA | !discord 🟣",
-  flag: "xk",
+  flag: "eu",
   lat: -34.68330001831055,
   lon: -58.88669967651367,
+  password: 0,
   maxPlayers: 30,
-  players: 0
 });
 
 /* ------------------ Selección por índice ------------------ */
 
 const jobIndex = Number.parseInt(process.env.INDEX || "0", 10);
-const token = process.env.JOB_ID || process.env.HAXBALL_TOKEN;
+const jobId = process.env.JOB_ID; // identificador de la sala (interno)
+const recaptchaToken = process.env.RECAPTCHA_TOKEN; // token real de Haxball
 const webhookUrl = "https://discord.com/api/webhooks/1365562720862208091/pgiPEDfXCpYE7mZM4-o1mDJ-AZnRTFxT_J_-EdO71hNUxFBFQ8Y5KcU6_jyGXXh3kvH2";
 
 const roomName = roomNames[jobIndex % roomNames.length];
@@ -93,8 +94,8 @@ const maxPlayers = maxPlayersList[jobIndex % maxPlayersList.length];
 const fakePlayers = fakePlayersList[jobIndex % fakePlayersList.length];
 const geo = geoList[jobIndex % geoList.length];
 
-if (!token) {
-  console.error("❌ No se encontró token (JOB_ID / HAXBALL_TOKEN).");
+if (!recaptchaToken) {
+  console.error("❌ No se encontró RECAPTCHA_TOKEN. No se puede crear la sala.");
   process.exit(1);
 }
 
@@ -107,11 +108,10 @@ Room.create(
     name: roomName,
     password: process.env.ROOM_PASSWORD || "",
     maxPlayerCount: maxPlayers,
-    playerCount: fakePlayers,
     unlimitedPlayerCount: true,
     showInRoomList: true,
     geo: geo,
-    token: token
+    token: recaptchaToken // 👈 token de recaptcha válido
   },
   {
     storage: {
@@ -218,4 +218,3 @@ Room.create(
     }
   }
 );
-
