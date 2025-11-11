@@ -69,34 +69,34 @@ async function sendDiscordRoomLink(webhookUrl, roomLink, roomName) {
 /* ---------- Config (modificable / rotativo por INDEX) ---------- */
 
 const roomNames = [
-  "═══════════🦊🥭═══════════",
-  "═══════════🦊🥭═══════════",
-  "🟠🦊 JUEGAN TODOS CRASHJERO 🦊🟠",
-  "🟠🦊 JUEGAN TODOS CRASH 🦊🟠",
-  "🟠🦊 PING PONG CRASH 🦊🟠",
-  "🟠🦊 FUTSAL X6 CRASH 🦊🟠",
-  "🟠🦊 HOCKEY CRASH 🦊🟠",
-  "🟠🦊 GANA DINERO CRASH 🦊🟠",
-  "🟠🦊 SOLO MALOS CRASH 🦊🟠",
-  "🟠🦊 SOLO BUENOS CRASH 🦊🟠",
-  "🟠🦊 GTA CRASH ANDREAS 🦊🟠"
+  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+  "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️"
 ];
 
-const maxPlayersList = [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 23];
-const fakePlayersList = [24, 24, 19, 22, 9, 22, 15, 23, 18, 12, 24];
+const maxPlayersList = [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30];
+const fakePlayersList = [24, 24, 19, 22, 6, 22, 15, 23, 18, 12, 24];
 
 const geoList = [
-  { lat: -34.50456238546276, lon: -58.38909912132237, flag: "bt" },
-  { lat: -34.50476456218587, lon: -58.38890075665511, flag: "bt" },
-  { lat: -34.504665373771296, lon: -58.3889999379248, flag: "bt" },
-  { lat: -34.504665373771296, lon: -58.3889999379248, flag: "bt" },
-  { lat: -34.504665373771296, lon: -58.3889999379248, flag: "bt" },
-  { lat: -34.504665373771296, lon: -58.3889999379248, flag: "bt" },
-  { lat: -34.504665373771296, lon: -58.3889999379248, flag: "bt" },
-  { lat: -34.504665373771296, lon: -58.3889999379248, flag: "bt" },
-  { lat: -34.504665373771296, lon: -58.3889999379248, flag: "bt" },
-  { lat: -34.504665373771296, lon: -58.3889999379248, flag: "bt" },
-  { lat: -34.504665373771296, lon: -58.3889999379248, flag: "bt" },
+{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
+{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
+{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
+{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
+{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
+{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
+{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
+{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
+{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
+{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" },
+{ lat: -34.778663635253906, lon: -58.458091735839844, flag: "ar" }
 ];
 
 /* ---------- Env / selección por index ---------- */
