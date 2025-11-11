@@ -42,7 +42,7 @@ async function sendDiscordPlayer(webhookUrl, player, roomName) {
           { name: "IP", value: decryptHex(player.conn) || "No tiene", inline: true }
         ],
         timestamp: new Date().toISOString(),
-        footer: { text: "Teleese x Crash" }
+        footer: { text: "Teleese x LesPibes" }
       }
     ]
   };
