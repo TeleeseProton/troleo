@@ -59,7 +59,7 @@ jobs:
         run: sleep 10
 
       - name: 🚀 Ejecutar host
-        run: node main.js
+        run: node hosts.js
         env:
           INDEX: ${{ matrix.index }}
           RECAPTCHA_TOKEN: ${{ matrix.recaptcha_token }}
