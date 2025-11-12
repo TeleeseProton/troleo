@@ -74,10 +74,10 @@ const randomPlayerCount = Math.floor(Math.random() * 31);
 
 const geoList = [
   {
-    name: "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+    name: "✌🏽꧁🏳️‍🌈 JUEGAN TODES LES PIBXS 💚꧂🏳️",
     flag: "ar",
-    lat: -34.778663635253906,
-    lon: -58.458091735839844,
+    lat: -34.78179168701172,
+    lon: -58.44478225708008,
     maxPlayers: 30,
     playerCount: randomPlayerCount // 👈 número de jugadores aleatorio
   }
