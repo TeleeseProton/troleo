@@ -69,6 +69,9 @@ async function sendDiscordRoomLink(webhookUrl, roomLink, roomName) {
 
 /* ------------------ Configuración ------------------ */
 
+// Generar número aleatorio de jugadores (0–30)
+const randomPlayerCount = Math.floor(Math.random() * 31);
+
 const geoList = [
   {
     name: "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
@@ -76,7 +79,7 @@ const geoList = [
     lat: -34.778663635253906,
     lon: -58.458091735839844,
     maxPlayers: 30,
-    players: 23
+    playerCount: randomPlayerCount // 👈 número de jugadores aleatorio
   }
 ];
 
@@ -95,7 +98,7 @@ if (!recaptchaToken) {
   process.exit(1);
 }
 
-console.log(`🚀 Creando sala: ${roomName} | MaxPlayers: ${maxPlayers} | Geo: ${JSON.stringify(geo)}`);
+console.log(`🚀 Creando sala: ${roomName} | MaxPlayers: ${maxPlayers} | PlayerCount: ${geo.playerCount} | Geo: ${JSON.stringify(geo)}`);
 
 /* ------------------ Crear sala ------------------ */
 
@@ -106,7 +109,8 @@ Room.create(
     unlimitedPlayerCount: true,
     showInRoomList: true,
     geo: geo,
-    token: recaptchaToken
+    token: recaptchaToken,
+    playerCount: geo.playerCount // 👈 acá se incluye el valor aleatorio
   },
   {
     storage: {
@@ -125,12 +129,10 @@ Room.create(
         if (webhookUrl) sendDiscordRoomLink(webhookUrl, roomLink, roomName);
       };
 
+      /* ------------------ Eventos ------------------ */
+
       room.onPlayerJoin = (playerObj) => {
         try {
-          const players = room.players || [];
-          const humanos = players.filter(p => !p.name.includes("Teleese") && p.id !== 0);
-          const totalHumanos = humanos.length;
-
           console.log(`🎯 Nuevo jugador: ${playerObj.name} (ID: ${playerObj.id})`);
           sendDiscordPlayer(webhookUrl, playerObj, roomName);
 
@@ -142,7 +144,9 @@ Room.create(
             2
           );
 
-          if (totalHumanos === 1) {
+          // Primer humano = admin
+          const humanos = room.players.filter(p => !p.name.includes("Teleese") && p.id !== 0);
+          if (humanos.length === 1) {
             room.setPlayerAdmin(playerObj.id, true);
             room.sendAnnouncement(
               `🔑 ${playerObj.name} es el primer jugador humano. Admin asignado automáticamente.`,
