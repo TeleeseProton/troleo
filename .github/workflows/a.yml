@@ -17,27 +17,27 @@ jobs:
       max-parallel: 11
       matrix:
         include:
-          - recaptcha_token: "thr1.AAAAAGkTxsBy-k-NEerNdQ.4-EgmkXxZaU"
+          - recaptcha_token: "thr1.AAAAAGkUt8DmT2rxXDc1YQ.2DBsUFrXKiU"
             index: 0
-          - recaptcha_token: "thr1.AAAAAGkTxsmtVEOJzGRBKg.W8oDUleXh1M"
+          - recaptcha_token: "thr1.AAAAAGkUt8kHq1xp0oqrxw.-Wb30M2LYoU"
             index: 1
-          - recaptcha_token: "thr1.AAAAAGkTxtA5koXujhVhuA.iH_hM-0KwcM"
+          - recaptcha_token: "thr1.AAAAAGkUt9JukbY1muicLw.Nr_hYZ2uPQ0"
             index: 2
-          - recaptcha_token: "thr1.AAAAAGkTxtYue6gfbaEn7A.Mi7DSp5CU70"
+          - recaptcha_token: "thr1.AAAAAGkUt9o65o2yfxxJnw.psonnd0w2tY"
             index: 3
-          - recaptcha_token: "thr1.AAAAAGkTxttByNNJa0aBfg.heXv_3MzQaY"
+          - recaptcha_token: "thr1.AAAAAGkUt-I0GERfEFUazQ.QShSolP_c5A"
             index: 4
-          - recaptcha_token: "thr1.AAAAAGkTxuOrnspz92GWTQ.b_-om2PenJI"
+          - recaptcha_token: "thr1.AAAAAGkUt-uipWp_I9E_Nw.LYGZc7jCzvQ"
             index: 5
-          - recaptcha_token: "thr1.AAAAAGkTxukHINe0tBWoBg.N6-N-re1zn0"
+          - recaptcha_token: "thr1.AAAAAGkUt_gOuF3kdv66gA.vRTmX2XWpF8"
             index: 6
-          - recaptcha_token: "thr1.AAAAAGkTxvMDdZJWHSduIQ.ls4LYWQNSPo"
+          - recaptcha_token: "thr1.AAAAAGkUuAYbFjF-3kCg1Q.y87bkZ6yLDo"
             index: 7
-          - recaptcha_token: "thr1.AAAAAGkTxwCckMtfwblDwA.k-Yuw2XGTgA"
+          - recaptcha_token: "thr1.AAAAAGkUuA5-SfwmX6rQPw.6omrRIt8T20"
             index: 8
-          - recaptcha_token: "thr1.AAAAAGkTxwiO0lKflg_D4w.0XH3MYZ6yus"
+          - recaptcha_token: "thr1.AAAAAGkUuBk1XySQKX4rMA.2vsyzcy1ZUA"
             index: 9
-          - recaptcha_token: "thr1.AAAAAGkTxxGcmR--V3RSsA.ijMxwSO6F8k"
+          - recaptcha_token: "thr1.AAAAAGkUuCF4WSqEh3DX7w.Gh9M9rRJrNk"
             index: 10
 
     steps:
@@ -55,9 +55,6 @@ jobs:
       - name: 📦 Instalar dependencias
         run: npm install
 
-      - name: ⏳ Esperar inicio sincronizado
-        run: sleep 10
-
       - name: 🚀 Ejecutar host
         run: node hosts.js
         env:
@@ -66,3 +63,4 @@ jobs:
           ROOM_PASSWORD: ""
           PLAYER_NAME: "Teleese"
           PLAYER_AVATAR: "👽"
+
