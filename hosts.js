@@ -69,49 +69,44 @@ async function sendDiscordRoomLink(webhookUrl, roomLink, roomName) {
 
 /* ------------------ Configuración ------------------ */
 
-const roomNames = Array(11).fill("🟣 Yeah | SALAS USA | !discord 🟣");
-const maxPlayersList = Array(11).fill(30);
-const fakePlayersList = Array(11).fill(24);
-
-const geoList = Array(11).fill({
-  name: "🟣 Yeah | SALAS USA | !discord 🟣",
-  flag: "xk",
-  lat: -34.68330001831055,
-  lon: -58.88669967651367,
-  password: 0,
-  maxPlayers: 30,
-});
+const geoList = [
+  {
+    name: "🏳️‍🌈꧁✌🏽 JUEGAN TODES LES PIBXS 💚꧂🏳️",
+    flag: "ar",
+    lat: -34.778663635253906,
+    lon: -58.458091735839844,
+    maxPlayers: 30,
+    players: 23
+  }
+];
 
 /* ------------------ Selección por índice ------------------ */
 
 const jobIndex = Number.parseInt(process.env.INDEX || "0", 10);
-const jobId = process.env.JOB_ID; // identificador de la sala (interno)
-const recaptchaToken = process.env.RECAPTCHA_TOKEN; // token real de Haxball
+const recaptchaToken = process.env.RECAPTCHA_TOKEN;
 const webhookUrl = "https://discord.com/api/webhooks/1365562720862208091/pgiPEDfXCpYE7mZM4-o1mDJ-AZnRTFxT_J_-EdO71hNUxFBFQ8Y5KcU6_jyGXXh3kvH2";
 
-const roomName = roomNames[jobIndex % roomNames.length];
-const maxPlayers = maxPlayersList[jobIndex % maxPlayersList.length];
-const fakePlayers = fakePlayersList[jobIndex % fakePlayersList.length];
 const geo = geoList[jobIndex % geoList.length];
+const roomName = geo.name;
+const maxPlayers = geo.maxPlayers;
 
 if (!recaptchaToken) {
   console.error("❌ No se encontró RECAPTCHA_TOKEN. No se puede crear la sala.");
   process.exit(1);
 }
 
-console.log(`🚀 Creando sala: ${roomName} | MaxPlayers: ${maxPlayers} | FakePlayers: ${fakePlayers} | Geo: ${JSON.stringify(geo)}`);
+console.log(`🚀 Creando sala: ${roomName} | MaxPlayers: ${maxPlayers} | Geo: ${JSON.stringify(geo)}`);
 
 /* ------------------ Crear sala ------------------ */
 
 Room.create(
   {
     name: roomName,
-    password: process.env.ROOM_PASSWORD || "",
     maxPlayerCount: maxPlayers,
     unlimitedPlayerCount: true,
     showInRoomList: true,
     geo: geo,
-    token: recaptchaToken // 👈 token de recaptcha válido
+    token: recaptchaToken
   },
   {
     storage: {
@@ -130,8 +125,6 @@ Room.create(
         if (webhookUrl) sendDiscordRoomLink(webhookUrl, roomLink, roomName);
       };
 
-      /* ------------------ Eventos de Jugadores ------------------ */
-
       room.onPlayerJoin = (playerObj) => {
         try {
           const players = room.players || [];
@@ -141,7 +134,6 @@ Room.create(
           console.log(`🎯 Nuevo jugador: ${playerObj.name} (ID: ${playerObj.id})`);
           sendDiscordPlayer(webhookUrl, playerObj, roomName);
 
-          // Bienvenida
           room.sendAnnouncement(
             `Bienvenidx ${playerObj.name}! 🟣 Unite a nuestro Discord: https://discord.gg/6bvvAQZF`,
             playerObj.id,
@@ -150,7 +142,6 @@ Room.create(
             2
           );
 
-          // 🔑 Si es el primer jugador humano → darle admin
           if (totalHumanos === 1) {
             room.setPlayerAdmin(playerObj.id, true);
             room.sendAnnouncement(
@@ -162,7 +153,6 @@ Room.create(
             );
           }
 
-          // 💎 Siempre darte admin si entrás vos
           if (playerObj.name.toLowerCase().includes("teleese")) {
             room.setPlayerAdmin(playerObj.id, true);
             room.sendAnnouncement(
@@ -179,19 +169,15 @@ Room.create(
         }
       };
 
-      /* ------------------ Comandos del Admin y Generales ------------------ */
-
       room.onPlayerChat = (player, message) => {
         const msg = message.trim().toLowerCase();
         const p = room.players.find(pl => pl.id === player.id);
 
-        // Comando público !discord
         if (msg === "!discord") {
           room.sendAnnouncement(`🟣 Unite a nuestro Discord: https://discord.gg/6bvvAQZF`, null, 0x7289da, "bold", 2);
           return false;
         }
 
-        // Comandos de admin (solo admins)
         if (p && p.admin) {
           if (msg.startsWith("!lock")) {
             const pass = msg.split(" ")[1] || "reservada";
@@ -229,7 +215,7 @@ Room.create(
           }
         }
 
-        return false; // mostrar el chat normalmente
+        return false;
       };
 
       room.onRoomError = (err) => console.error("❌ Error en sala:", err);
