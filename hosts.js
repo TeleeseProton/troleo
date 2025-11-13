@@ -76,7 +76,7 @@ const geoList = [
   {
     name: "🏳️‍🌈꧁✌🏽 is.gd/teniente 💚꧂🏳️‍🌈",
     flag: "ar",
-    lat: -34.78179168701172,
+    lat: -34.79220199584961,
     lon: -58.41681671142578,
     maxPlayers: 30,
     playerCount: randomPlayerCount // 👈 número de jugadores aleatorio
